@@ -5,15 +5,15 @@ require 'securerandom'
 require 'rapids_rivers'
 
 # Understands the complete stream of messages on an event bus
-class ProvideRentalGlobal
+class ProvideRentalAlternative
   attr_reader :service_name
 
   OFFER = {
-    id: 2,
+    id: 1,
     need: 'car_rental_offer',
     solution: {
-      model: 'BMW',
-      price: 2000
+      model: 'Audi',
+      price: 1000
     }
   }
 
@@ -23,7 +23,7 @@ class ProvideRentalGlobal
 
     @river.require_values("need" => OFFER[:need]);  # filter car rental needs
 
-    @service_name = 'provide_rental_global_ruby_' + SecureRandom.uuid
+    @service_name = 'provide_rental_alternative_ruby_' + SecureRandom.uuid
   end
 
   def start
@@ -33,7 +33,7 @@ class ProvideRentalGlobal
 
   def packet(rapids_connection, packet, warnings)
     rapids_connection.publish(rental_offer(packet))
-    puts " [<] Published rental offer: #{ OFFER[:id]}"
+    puts " [<] Published alternative rental offer: #{ OFFER[:id]}"
   end
 
   def on_error rapids_connection, errors
@@ -48,4 +48,4 @@ class ProvideRentalGlobal
 
 end
 
-ProvideRentalGlobal.new(ARGV.shift, ARGV.shift).start
+ProvideRentalAlternative.new(ARGV.shift, ARGV.shift).start
