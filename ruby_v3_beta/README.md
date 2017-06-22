@@ -34,3 +34,9 @@ sample _sending_ code.
 
 __Packet__ is a convenience class for manipulating JSON information, particularly
 effective for enhancing existing information.
+
+## Workshop outline
+Write the following microservices:
+1. a Need provider (already exists)
+2. TWO solution providers
+3. A solution collector should pick the best solution for evey offer
