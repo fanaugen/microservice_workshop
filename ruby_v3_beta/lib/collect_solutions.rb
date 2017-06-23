@@ -35,10 +35,6 @@ class CollectSolutions
     end
   end
 
-  def on_error rapids_connection, errors
-    # ignore the error
-  end
-
   private
 
   def send_offer(connection, packet)
