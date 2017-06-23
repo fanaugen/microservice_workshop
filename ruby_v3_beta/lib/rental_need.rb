@@ -33,8 +33,13 @@ def initialize(host_ip, port)
   private
 
     def need_packet
-      fields = { need: NEED }
+      fields = { need: NEED, uuid: SecureRandom.uuid }
+      fields.merge!(user_id: user_id) if rand > 0.5
       RapidsRivers::Packet.new fields
+    end
+
+    def user_id
+      rand(100)
     end
 
 end
