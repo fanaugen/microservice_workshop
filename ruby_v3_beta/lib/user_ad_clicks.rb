@@ -32,7 +32,7 @@ class UserAdClicks
     if click?(packet)
       packet.clicked = true
       rapids_connection.publish packet
-      puts " [<] Clicked an ad: \n\t     #{packet.to_json}"
+      puts " [>] Clicked an ad: \n\t     #{packet.to_json}"
     end
   end
 

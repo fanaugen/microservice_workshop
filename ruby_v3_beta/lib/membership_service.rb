@@ -30,7 +30,9 @@ class MembershipService
 
   def packet rapids_connection, packet, warnings
     return if packet.user_id.odd?
-    packet.membership_level = membership_level
+    level = membership_level
+    puts " [>] User #{packet.user_id} is a member of level #{level} : \n\t     #{packet.to_json}"
+    packet.membership_level = level
     rapids_connection.publish(packet)
   end
 
