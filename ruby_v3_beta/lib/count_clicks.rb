@@ -47,8 +47,14 @@ class ClickCount
     end
 
     @packet_count += 1
-    if (@packet_count % 10).zero?
-      pp offer_stats
+    report_stats if (@packet_count % 10).zero?
+  end
+
+  def report_stats
+    offer_stats.each_pair do |name, counts|
+      shown, clicked = *counts.values
+      rate = counts[:shown] / counts[:clicked].to_f * 100
+      puts "OFFER '#{name}'\t #{shown} total,\t #{clicked} clicks (#{"%0.1f" % rate})"
     end
   end
 end
