@@ -16,16 +16,15 @@ class UserAdClicks
   attr_reader :service_name
 
   def initialize(host_ip, port)
+    @service_name = 'user_ad_clicks_' + SecureRandom.uuid
     rapids_connection = RapidsRivers::RabbitMqRapids.new(host_ip, port)
     @river = RapidsRivers::RabbitMqRiver.new(rapids_connection)
     @river.require('shown_offer')
     @river.forbid('clicked')
-    # @river.interested_in('user_id')
-    @service_name = 'user_ad_clicks_' + SecureRandom.uuid
   end
 
   def start
-    # puts " [*] #{@service_name} waiting for traffic on RabbitMQ event bus ... To exit press CTRL+C"
+    puts " [*] #{@service_name} listening for user ad clicks..."
     @river.register(self)
   end
 
@@ -36,10 +35,6 @@ class UserAdClicks
       puts " [<] Clicked an ad: \n\t     #{packet.to_json}"
     end
   end
-
-  # def on_error rapids_connection, errors
-  #   # puts " [x] #{errors}"
-  # end
 
   private
 

@@ -39,6 +39,7 @@ class CollectSolutions
 
   def send_offer(connection, packet)
     packet.best_offer = packet.offer
+    puts " [<] publishing best offer: #{packet.best_offer}"
     connection.publish(packet)
   end
 
