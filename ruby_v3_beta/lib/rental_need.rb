@@ -17,7 +17,7 @@ class RentalNeed
 
   NEED = 'car_rental_offer'
 
-def initialize(host_ip, port)
+  def initialize(host_ip, port)
     @rapids_connection = RapidsRivers::RabbitMqRapids.new(host_ip, port)
     @service_name = 'rental_need_ruby_' + SecureRandom.uuid
   end
@@ -25,22 +25,22 @@ def initialize(host_ip, port)
   def start
     loop do
       @rapids_connection.publish need_packet
-      puts " [<] Published a rental offer need on the bus:\n\t     #{need_packet.to_json}"
+      puts " [<] published a need: #{need_packet.to_json}"
       sleep 5
     end
   end
 
   private
 
-    def need_packet
-      fields = { need: NEED, uuid: SecureRandom.uuid }
-      fields.merge!(user_id: user_id) if rand > 0.5
-      RapidsRivers::Packet.new fields
-    end
+  def need_packet
+    fields = { need: NEED, uuid: SecureRandom.uuid }
+    fields.merge!(user_id: user_id) if rand > 0.5
+    RapidsRivers::Packet.new fields
+  end
 
-    def user_id
-      rand(100)
-    end
+  def user_id
+    rand(100)
+  end
 
 end
 

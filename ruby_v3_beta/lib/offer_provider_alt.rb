@@ -5,7 +5,7 @@ require 'securerandom'
 require 'rapids_rivers'
 
 # Understands the complete stream of messages on an event bus
-class ProvideRentalAlternative
+class OfferProviderAlt
   attr_reader :service_name
 
   OFFER = {
@@ -18,12 +18,12 @@ class ProvideRentalAlternative
   }
 
   def initialize(host_ip, port)
+    @service_name = 'offer_provider_ruby_' + SecureRandom.uuid
+
     rapids_connection = RapidsRivers::RabbitMqRapids.new(host_ip, port)
     @river = RapidsRivers::RabbitMqRiver.new(rapids_connection)
 
     @river.require_values("need" => OFFER[:need]);  # filter car rental needs
-
-    @service_name = 'provide_rental_alternative_ruby_' + SecureRandom.uuid
   end
 
   def start
@@ -33,11 +33,7 @@ class ProvideRentalAlternative
 
   def packet(rapids_connection, packet, warnings)
     rapids_connection.publish(rental_offer(packet))
-    puts " [<] Published alternative rental offer: #{ OFFER[:id]}"
-  end
-
-  def on_error rapids_connection, errors
-    # ignore the error
+    puts " [<] publishing rental offer: #{OFFER[:id]}"
   end
 
   private
@@ -45,7 +41,6 @@ class ProvideRentalAlternative
   def rental_offer(packet)
     RapidsRivers::Packet.new(OFFER)
   end
-
 end
 
-ProvideRentalAlternative.new(ARGV.shift, ARGV.shift).start
+OfferProviderAlt.new(ARGV.shift, ARGV.shift).start
