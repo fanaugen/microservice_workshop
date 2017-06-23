@@ -48,13 +48,13 @@ class RentalOfferAlt
   def member_offer
     { name:   'Holden VK Commodore for members only',
       price:  rand(50_000..60_000),
-      chance: 1 }
+      chance: rand(0.5..0.8).round(2) }
   end
 
   def offer
     { name:   'Holden VK Commodore',
       price:  rand(10_000..20_000),
-      chance: rand }
+      chance: rand(0.2..0.4).round(2) }
   end
 end
 

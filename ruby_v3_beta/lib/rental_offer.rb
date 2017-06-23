@@ -48,7 +48,7 @@ class RentalOffer
   def member_offer
     { name:   'Mercedes SL for members only',
       price:  50_000,
-      chance: 1 }
+      chance: 0.8 }
   end
 
   def offer
